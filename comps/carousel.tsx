@@ -2,6 +2,7 @@ import React from 'react'
 import styles from "../styles/Carousel.module.css"
 
 export default function carousel() {
+  //#region temp Data 
   //TODO: redfine interface as database columns
   interface cardData {
     id: number,
@@ -17,6 +18,9 @@ export default function carousel() {
     {id: 800, title: 'test data', rating: 8.6, imageURL: 'https://www.uphe.com/sites/default/files/styles/scale__344w_/public/2019/01/Jaws_PosterArt_025192126291.png'},
     {id: 7, title: 'test data', rating: 100, imageURL: 'https://www.uphe.com/sites/default/files/styles/scale__344w_/public/2019/01/Jaws_PosterArt_025192126291.png'},
   ];
+  //#endregion
+
+  //#region create Cards
 
   //TODO: carousel cards shold probably be using state 
   let carouselCards = cardNumber.map((obj, index)=>{
@@ -28,11 +32,19 @@ export default function carousel() {
     return card
   })
 
+  //#endregion
+
+  //#region create load More Card
+
   let loadMoreCard = <button onClick={loadMoreCards} className={styles.card} key={-1}>
     <p className={styles.cardTitle}>Load More</p>
   </button>
 
   carouselCards.push(loadMoreCard);
+
+  //#endregion
+
+  //#region Card Helpers
 
   function showCardModal(card:cardData) {
     console.log(`TODO: generate modal with data from id:${card.id} in hiddenModal and display`);
@@ -43,6 +55,8 @@ export default function carousel() {
     console.log("TODO: load more cards here and re render state");
     carouselCards.push(loadMoreCard);
   }
+
+  //#endregion
 
   return (
     <>
