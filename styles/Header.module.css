@@ -1,0 +1,26 @@
+.headermain {
+    height: 60px;
+    min-height: 5vh;
+    max-height: 10vh;
+    background-color: #092740;
+    width: 100vw;
+    display: flex;
+    align-items: center;
+}
+
+.logo {
+    height: 60px;
+    min-height: 5vh;
+    max-height: 10vh;
+}
+
+.navLink {
+    color: #60B0F4;
+
+    margin: 15px;
+}
+
+.activeNavLink {
+    color: #C8EDFF;
+    margin: 15px;
+}
