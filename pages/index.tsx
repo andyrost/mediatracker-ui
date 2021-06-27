@@ -1,6 +1,7 @@
 import Head from 'next/head'
 import styles from '../styles/Home.module.css'
 import Footer from '../comps/footer'
+import Carousel from '../comps/carousel'
 
 export default function Home() {
   return (
@@ -22,6 +23,7 @@ export default function Home() {
         </p>
 
         <div className={styles.grid}>
+          {/*
           <a href="https://nextjs.org/docs" className={styles.card}>
             <h2>Documentation &rarr;</h2>
             <p>Find in-depth information about Next.js features and API.</p>
@@ -49,7 +51,9 @@ export default function Home() {
               Instantly deploy your Next.js site to a public URL with Vercel.
             </p>
           </a>
+          */}
         </div>
+        <Carousel />
       </main>
 
       <Footer />

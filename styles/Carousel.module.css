@@ -1,0 +1,41 @@
+.carousel {
+  display: flex;
+  width: 100%;
+  max-width: 800px;
+  overflow-x: scroll;
+}
+
+.card {
+  min-width: 12rem;
+  height: 18rem;
+  background-color: darkslategray;
+  background-position: center;
+  background-size: cover;
+  color: white;
+  margin: 0.25em;
+  border-style: solid;
+  border-width: 0px;
+  z-index: 1;
+  position: relative;
+  cursor: pointer;
+}
+
+.cardTitle {
+  font-size: 2em;
+}
+.cardRating {
+  position: absolute;
+  bottom: 0;
+  right: 0;
+}
+
+.card::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.5);
+  z-index: -1;
+}
