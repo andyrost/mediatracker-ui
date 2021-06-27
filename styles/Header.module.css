@@ -3,7 +3,6 @@
     min-height: 5vh;
     max-height: 10vh;
     background-color: #092740;
-    width: 100vw;
     display: flex;
     align-items: center;
 }
