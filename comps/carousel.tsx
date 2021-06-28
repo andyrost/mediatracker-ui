@@ -1,69 +1,57 @@
-import React from 'react'
+import React, {useState, Component} from 'react'
 import styles from "../styles/Carousel.module.css"
 
-export default function carousel() {
-  //#region temp Data 
-  //TODO: redfine interface as database columns
-  interface cardData {
-    id: number,
-    title: string,
-    rating: number,
-    imageURL: string
-  }
-  //TODO: this should be loaded from prop and based on database data
-  let cardNumber:cardData[] = [
-    {id: 0, title: 'test data', rating: 0, imageURL: 'https://www.uphe.com/sites/default/files/styles/scale__344w_/public/2019/01/Jaws_PosterArt_025192126291.png'},
-    {id: 1, title: 'test data', rating: 1, imageURL: 'https://www.uphe.com/sites/default/files/styles/scale__344w_/public/2019/01/Jaws_PosterArt_025192126291.png'},
-    {id: 2, title: 'test data', rating: 2.5, imageURL: 'https://www.uphe.com/sites/default/files/styles/scale__344w_/public/2019/01/Jaws_PosterArt_025192126291.png'},
-    {id: 800, title: 'test data', rating: 8.6, imageURL: 'https://www.uphe.com/sites/default/files/styles/scale__344w_/public/2019/01/Jaws_PosterArt_025192126291.png'},
-    {id: 7, title: 'test data', rating: 100, imageURL: 'https://www.uphe.com/sites/default/files/styles/scale__344w_/public/2019/01/Jaws_PosterArt_025192126291.png'},
-  ];
-  //#endregion
-
-  //#region create Cards
-
-  //TODO: carousel cards shold probably be using state 
-  let carouselCards = cardNumber.map((obj, index)=>{
-    let card = 
-      <button onClick={()=>{showCardModal(obj)}} type="button" className={styles.card} key={obj.id} style={{backgroundImage: `url('${obj.imageURL}')`}}>
-        <p className={styles.cardTitle}>{obj.title}</p>
-        <p className={styles.cardRating}>{obj.rating}</p>
-      </button>
-    return card
-  })
-
-  //#endregion
-
-  //#region create load More Card
-
-  let loadMoreCard = <button onClick={loadMoreCards} className={styles.card} key={-1}>
-    <p className={styles.cardTitle}>Load More</p>
-  </button>
-
-  carouselCards.push(loadMoreCard);
-
-  //#endregion
-
-  //#region Card Helpers
-
-  function showCardModal(card:cardData) {
-    console.log(`TODO: generate modal with data from id:${card.id} in hiddenModal and display`);
-  }
-
-  function loadMoreCards() {
-    carouselCards.pop(); //pop load more card
-    console.log("TODO: load more cards here and re render state");
-    carouselCards.push(loadMoreCard);
-  }
-
-  //#endregion
-
-  return (
-    <>
-    <div className={styles.carousel}>
-      {carouselCards}
-    </div>
-    <div className="hiddenModal"></div>
-    </>
-  )
+//TODO: redfine interface as database columns
+interface cardData {
+  id: number,
+  title: string,
+  rating: number,
+  imageURL: string
 }
+class Carousel extends Component {
+  state = {
+    cardDataArray: [
+      {id: 0, title: 'test data', rating: 0, imageURL: 'https://www.uphe.com/sites/default/files/styles/scale__344w_/public/2019/01/Jaws_PosterArt_025192126291.png'},
+      {id: 1, title: 'test data', rating: 1, imageURL: 'https://www.uphe.com/sites/default/files/styles/scale__344w_/public/2019/01/Jaws_PosterArt_025192126291.png'},
+      {id: 2, title: 'test data', rating: 2.5, imageURL: 'https://www.uphe.com/sites/default/files/styles/scale__344w_/public/2019/01/Jaws_PosterArt_025192126291.png'},
+      {id: 800, title: 'test data', rating: 8.6, imageURL: 'https://www.uphe.com/sites/default/files/styles/scale__344w_/public/2019/01/Jaws_PosterArt_025192126291.png'},
+      {id: 7, title: 'test data', rating: 100, imageURL: 'https://www.uphe.com/sites/default/files/styles/scale__344w_/public/2019/01/Jaws_PosterArt_025192126291.png'},
+    ]
+  }
+
+  Carousel() {
+    console.log('constructor called');
+  }
+
+  addCard() {
+    let currentCardDataState = this.state.cardDataArray;
+    currentCardDataState.push({id: 10, title: 'new data', rating: 100, imageURL: ''})
+
+    console.log('adding card to state');
+
+    this.setState({
+      cardDataArray: currentCardDataState
+    })
+  }
+
+  render() {
+    return (
+      <div id="Carousel" className={styles.carousel}>
+        {this.state.cardDataArray.map((item) => {
+          let card = 
+          <button type="button" className={styles.card} key={item.id} style={{backgroundImage: `url('${item.imageURL}')`}}>
+            <p className={styles.cardTitle}>{item.title}</p>
+            <p className={styles.cardRating}>{item.rating}</p>
+          </button>
+
+          return card;
+        })}
+        <button type="button" className={styles.card} key={-1} onClick={() => {this.addCard()}}>
+          <p className={styles.cardTitle}>load More</p>
+        </button>
+      </div>
+    )
+  }
+}
+
+export default Carousel;
