@@ -1,25 +1,27 @@
 .headermain {
-    height: 60px;
-    min-height: 5vh;
-    max-height: 10vh;
-    background-color: #092740;
-    display: flex;
-    align-items: center;
+  height: 60px;
+  min-height: 5vh;
+  max-height: 10vh;
+  background-color: #092740;
+  display: flex;
+  align-items: center;
+  position: absolute;
+  width: 100vw;
 }
 
 .logo {
-    height: 60px;
-    min-height: 5vh;
-    max-height: 10vh;
+  height: 60px;
+  min-height: 5vh;
+  max-height: 10vh;
 }
 
 .navLink {
-    color: #60B0F4;
+  color: #60b0f4;
 
-    margin: 15px;
+  margin: 15px;
 }
 
 .activeNavLink {
-    color: #C8EDFF;
-    margin: 15px;
+  color: #c8edff;
+  margin: 15px;
 }
