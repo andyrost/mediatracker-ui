@@ -1,8 +1,10 @@
 import React from "react";
 import styles from "../styles/Header.module.css";
 import Link from "next/link";
+import Image from "next/image";
 import { useRouter } from "next/router";
-import { signIn, signOut, useSession } from "next-auth/client";
+import { signOut, useSession } from "next-auth/client";
+import shortLogo from "../public/shortlogo.png";
 
 export default function header() {
   const router = useRouter();
@@ -52,7 +54,7 @@ export default function header() {
 
   return (
     <div className={styles.headermain}>
-      <img src="shortlogo.png" style={logo}></img>
+      <Image src={shortLogo} height={60} />
       <div style={navdiv}>
         <Link href="/">
           <a
