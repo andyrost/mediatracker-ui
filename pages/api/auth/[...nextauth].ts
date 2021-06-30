@@ -11,7 +11,6 @@ const options = {
     }),
     // ...add more providers here
   ],
-  database: process.env.DATABASE_URL,
 };
 
 export default (req: any, res: any) => NextAuth(req, res, options);

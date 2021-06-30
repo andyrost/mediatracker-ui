@@ -1,5 +1,6 @@
 import Head from "next/head";
 import styles from "../styles/Home.module.css";
+import "bootstrap/dist/css/bootstrap.min.css";
 
 import Carousel from "../comps/carousel";
 import Unauthorized from "./Unauthorized";
@@ -7,8 +8,7 @@ import { useSession } from "next-auth/client";
 
 export default function Home() {
   const [session, loading] = useSession();
-  var content = session ? <Carousel /> : <Unauthorized></Unauthorized>;
-  return (
+  var content = (
     <div className={styles.container}>
       <Head>
         <title>MediaTracker</title>
@@ -17,10 +17,11 @@ export default function Home() {
       </Head>
 
       <main className={styles.main}>
-        <h1 className={styles.title}>Welcome to MediaTracker</h1>
+        <h1 className={styles.title}>Welcome, {session?.user?.name}</h1>
 
-        {content}
+        <Carousel />
       </main>
     </div>
   );
+  return session ? content : <Unauthorized></Unauthorized>;
 }
