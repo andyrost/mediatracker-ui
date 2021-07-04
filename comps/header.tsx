@@ -44,9 +44,9 @@ export default function header() {
     );
   } else {
     logbutton = (
-      <Link href="/signin">
-        <button className="btn btn-secondary">Signin</button>
-      </Link>
+      <button className="btn btn-secondary" onClick={() => signIn()}>
+        Login
+      </button>
     );
   }
 

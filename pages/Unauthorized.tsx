@@ -25,9 +25,9 @@ export default function Unauthorized() {
         <h3>Sorry, it looks like you don't have access to this page.</h3>
         <p>Please sign in here.</p>
         <p>
-          <Link href="/signin">
-            <button className="btn btn-secondary">Sign in</button>
-          </Link>
+          <button className="btn btn-secondary" onClick={() => signIn()}>
+            Login
+          </button>
         </p>
       </div>
     </div>
