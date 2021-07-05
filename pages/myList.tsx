@@ -1,9 +1,5 @@
-import React from 'react'
+import React from "react";
 
-export default function myList() {
-  return (
-    <div>
-      My List
-    </div>
-  )
+export default function MyList() {
+  return <div>My List</div>;
 }

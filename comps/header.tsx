@@ -63,28 +63,28 @@ export default function header() {
             Home
           </a>
         </Link>
-        <Link href="/haveWatched">
+        <Link href="/HaveWatched">
           <a
             className={
-              router.pathname == "/haveWatched" ? "nav-link active" : "nav-link"
+              router.pathname == "/HaveWatched" ? "nav-link active" : "nav-link"
             }
           >
             Have Watched
           </a>
         </Link>
-        <Link href="/myList">
+        <Link href="/MyList">
           <a
             className={
-              router.pathname == "/myList" ? "nav-link active" : "nav-link"
+              router.pathname == "/MyList" ? "nav-link active" : "nav-link"
             }
           >
             My List
           </a>
         </Link>
-        <Link href="/watchNext">
+        <Link href="/WatchNext">
           <a
             className={
-              router.pathname == "/watchNext" ? "nav-link active" : "nav-link"
+              router.pathname == "/WatchNext" ? "nav-link active" : "nav-link"
             }
           >
             Watch Next

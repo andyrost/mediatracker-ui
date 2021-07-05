@@ -1,9 +1,5 @@
-import React from 'react'
+import React from "react";
 
-export default function watchNext() {
-  return (
-    <div>
-      Watch Next
-    </div>
-  )
+export default function WatchNext() {
+  return <div>Watch Next</div>;
 }

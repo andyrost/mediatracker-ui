@@ -1,9 +1,9 @@
-import React from 'react'
+import React from "react";
 
-export default function haveWatched() {
+export default function HaveWatched() {
   return (
     <div>
       <h2>You have watched</h2>
     </div>
-  )
+  );
 }
