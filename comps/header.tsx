@@ -11,23 +11,7 @@ export default function header() {
   const [session, loading] = useSession();
 
   var logbutton;
-
-  const headermain = {
-    height: "60px",
-    minHeight: "5vh",
-    maxHeight: "10vh",
-    backgroundColor: "#092740",
-    display: "flex",
-    alignItems: "center",
-    position: "absolute",
-    width: "100vw",
-  };
-
-  const logo = {
-    height: "60px",
-    minHeight: "5vh",
-    maxHeight: "10vh",
-  };
+  var profilepic = <div></div>;
 
   const logbuttonstyle = {
     margin: "10px",
@@ -38,12 +22,20 @@ export default function header() {
     minWidth: "30vw",
   };
 
+  const profilepicstyle = {
+    maxHeight: "60px",
+  };
+
   if (session) {
     logbutton = (
       <button className="btn btn-secondary" onClick={() => signOut()}>
         Logout
       </button>
     );
+    if (session.user?.image) {
+      var imagepath: string = session.user.image;
+      profilepic = <img src={imagepath} style={profilepicstyle} />;
+    }
   } else {
     logbutton = (
       <button className="btn btn-secondary" onClick={() => signIn()}>
@@ -95,6 +87,7 @@ export default function header() {
       <div className="form-inline my-2 my-lg-0" style={logbuttonstyle}>
         {logbutton}
       </div>
+      {profilepic}
     </div>
   );
 }
