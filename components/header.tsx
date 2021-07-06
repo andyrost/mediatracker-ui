@@ -13,7 +13,7 @@ export default function header() {
   var profilepic = <div></div>;
 
   const navlink =
-    "block mt-4 lg:inline-block lg:mt-0 text-white hover:font-bold mr-4";
+    "transition duration-200 block mt-4 lg:inline-block lg:mt-0 text-white hover:text-primary-light mr-4";
   const navlinkactive =
     "block mt-4 lg:inline-block lg:mt-0 text-white font-bold mr-4";
 
@@ -44,7 +44,7 @@ export default function header() {
         </span>
       </div>
       <div className="block lg:hidden">
-        <button className="flex items-center px-3 py-2 border rounded text-teal-200 border-teal-400 hover:text-white hover:border-white">
+        <button className="flex items-center px-3 py-2 border rounded text-white border-white hover:text-white hover:border-white">
           <svg
             className="fill-current h-3 w-3"
             viewBox="0 0 20 20"

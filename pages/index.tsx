@@ -16,8 +16,10 @@ export default function Home() {
           <link rel="icon" href="/favicon.ico" />
         </Head>
 
-        <main>
-          <h1>Welcome, {session?.user?.name}</h1>
+        <main className="bg-primary-dark h-full">
+          <h1 className="text-white font-bold text-2xl">
+            Welcome, {session?.user?.name}
+          </h1>
 
           <Carousel />
         </main>
