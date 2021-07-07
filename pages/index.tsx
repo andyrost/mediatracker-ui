@@ -17,10 +17,16 @@ export default function Home() {
         </Head>
 
         <main className="bg-primary-dark h-full">
-          <h1 className="text-white font-bold text-2xl">
+          <h1 className="text-white font-bold text-2xl m-4">
             Welcome, {session?.user?.name}
           </h1>
-
+          <h2 className="ml-4 text-white font-semibold text-xl">
+            Recently Watched...
+          </h2>
+          <Carousel />
+          <h2 className="ml-4 text-white mt-2 font-semibold text-xl">
+            Your List...
+          </h2>
           <Carousel />
         </main>
       </div>
