@@ -13,9 +13,9 @@ export default function header() {
   var profilepic = <div></div>;
 
   const navlink =
-    "transition duration-200 block mt-4 lg:inline-block lg:mt-0 text-white hover:text-primary-light mr-4";
+    "transition duration-200 block mt-4 lg:inline-block lg:mt-0 text-white hover:text-primary-light mr-6 text-lg";
   const navlinkactive =
-    "block mt-4 lg:inline-block lg:mt-0 text-white font-bold mr-4";
+    "block mt-4 lg:inline-block lg:mt-0 text-white font-bold mr-6 text-lg";
 
   if (session) {
     logbutton = (
