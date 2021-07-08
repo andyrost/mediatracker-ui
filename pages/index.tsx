@@ -16,7 +16,7 @@ export default function Home() {
           <link rel="icon" href="/favicon.ico" />
         </Head>
 
-        <main className="bg-primary-dark h-full">
+        <main className="bg-primary-dark h-full overflow-auto">
           <h1 className="text-white font-bold text-2xl m-4">
             Welcome, {session?.user?.name}
           </h1>
@@ -33,7 +33,7 @@ export default function Home() {
     );
   }
   if (loading) {
-    return <div>Loading...</div>;
+    return <div className="m-4 text-white">Loading...</div>;
   }
   return <Unauthorized></Unauthorized>;
 }
