@@ -18,15 +18,24 @@ export default function header() {
     "block mt-4 lg:inline-block lg:mt-0 text-white font-bold mr-6 text-lg";
 
   if (session) {
-    logbutton = (
-      <button className="btn btn-blue" onClick={() => signOut()}>
-        Logout
-      </button>
-    );
     if (session.user?.image) {
       var imagepath: string = session.user.image;
-      profilepic = <img src={imagepath} />;
+      profilepic = (
+        <Link href="/Profile">
+          <a>
+            <img src={imagepath} className="rounded-full" />
+          </a>
+        </Link>
+      );
     }
+    logbutton = (
+      <div className="flex">
+        <button className="btn btn-blue h-10 m-3" onClick={() => signOut()}>
+          Logout
+        </button>
+        <div className="rounded-full bg-white h-16 w-16">{profilepic}</div>
+      </div>
+    );
   } else {
     logbutton = (
       <button className="btn btn-blue" onClick={() => signIn()}>
@@ -57,34 +66,38 @@ export default function header() {
       </div>
       <div className="w-full block flex-grow lg:flex lg:items-center lg:w-auto">
         <div className="text-sm lg:flex-grow">
-          <a
-            href="/"
-            className={router.pathname === "/" ? navlinkactive : navlink}
-          >
-            Dashboard
-          </a>
-          <a
-            href="/HaveWatched"
-            className={
-              router.pathname === "/HaveWatched" ? navlinkactive : navlink
-            }
-          >
-            My Watched
-          </a>
-          <a
-            href="/MyList"
-            className={router.pathname === "/MyList" ? navlinkactive : navlink}
-          >
-            My List
-          </a>
-          <a
-            href="/WatchNext"
-            className={
-              router.pathname === "/WatchNext" ? navlinkactive : navlink
-            }
-          >
-            What To Watch Next
-          </a>
+          <Link href="/">
+            <a className={router.pathname === "/" ? navlinkactive : navlink}>
+              Dashboard
+            </a>
+          </Link>
+          <Link href="/HaveWatched">
+            <a
+              className={
+                router.pathname === "/HaveWatched" ? navlinkactive : navlink
+              }
+            >
+              My Watched
+            </a>
+          </Link>
+          <Link href="/MyList">
+            <a
+              className={
+                router.pathname === "/MyList" ? navlinkactive : navlink
+              }
+            >
+              My List
+            </a>
+          </Link>
+          <Link href="/WatchNext">
+            <a
+              className={
+                router.pathname === "/WatchNext" ? navlinkactive : navlink
+              }
+            >
+              What To Watch Next
+            </a>
+          </Link>
         </div>
         <div>{logbutton}</div>
       </div>
