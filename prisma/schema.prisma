@@ -87,6 +87,8 @@ model Media {
   type    String
   poster  String?
   genres  String[]
+  director String
+  writers String[]
   stars   String[]
   addedBy User? @relation(fields: [addedById], references: [id])
   addedById String?

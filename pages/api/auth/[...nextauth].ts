@@ -1,10 +1,9 @@
 import NextAuth from "next-auth";
 import Providers from "next-auth/providers";
 import Adapters from "next-auth/adapters";
+import prisma from "../../../lib/prisma";
 
 import { PrismaClient } from "@prisma/client";
-
-const prisma = new PrismaClient();
 
 const options = {
   // Configure one or more authentication providers

@@ -21,7 +21,7 @@ export default function header() {
     if (session.user?.image) {
       var imagepath: string = session.user.image;
       profilepic = (
-        <Link href="/Profile">
+        <Link href="/profile">
           <a>
             <img src={imagepath} className="rounded-full" />
           </a>
@@ -71,28 +71,28 @@ export default function header() {
               Dashboard
             </a>
           </Link>
-          <Link href="/HaveWatched">
+          <Link href="/havewatched">
             <a
               className={
-                router.pathname === "/HaveWatched" ? navlinkactive : navlink
+                router.pathname === "/havewatched" ? navlinkactive : navlink
               }
             >
               My Watched
             </a>
           </Link>
-          <Link href="/MyList">
+          <Link href="/mylist">
             <a
               className={
-                router.pathname === "/MyList" ? navlinkactive : navlink
+                router.pathname === "/mylist" ? navlinkactive : navlink
               }
             >
               My List
             </a>
           </Link>
-          <Link href="/WatchNext">
+          <Link href="/watchnext">
             <a
               className={
-                router.pathname === "/WatchNext" ? navlinkactive : navlink
+                router.pathname === "/watchnext" ? navlinkactive : navlink
               }
             >
               What To Watch Next
