@@ -4,8 +4,10 @@ export default function addmedia() {
   const [state, setState] = React.useState({
     search: "",
   });
+
   async function handleSubmit(e: any) {
     e.preventDefault();
+
     let url =
       "https://api.themoviedb.org/3/search/multi?api_key=" +
       process.env.NEXT_PUBLIC_TMDB_KEY +

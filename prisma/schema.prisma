@@ -81,17 +81,52 @@ model WatchedMedia {
 
 model Media {
   id      Int @id @default(autoincrement())
+  tmdbId Int
   title   String
   description String
-  year    String
+  year Int
+  release_date DateTime
   type    String
   poster  String?
+  backdrop String?
   genres  String[]
-  director String
-  writers String[]
-  stars   String[]
+  cast   CastInMedia[]
+  crew CrewInMedia[]
   addedBy User? @relation(fields: [addedById], references: [id])
   addedById String?
   watchedBy WatchedMedia[]
   verified Boolean @default(false)
+}
+
+model Cast {
+  id      Int @id @default(autoincrement())
+  name String
+  nationality String
+  involvedMedia CastInMedia[]
+
+}
+
+model CastInMedia{
+  cast Cast @relation(fields:[castId], references:[id])
+  castId Int
+  media Media @relation(fields:[mediaId], references: [id])
+  mediaId Int 
+  character String
+
+  @@id([castId, mediaId])
+}
+
+model Crew {
+  id Int @id @default(autoincrement())
+  name String
+  involvedMedia CrewInMedia[]
+}
+
+model CrewInMedia {
+  crew Crew @relation(fields:[crewId], references: [id])
+  crewId Int
+  media Media @relation(fields:[mediaId], references: [id])
+  mediaId Int
+
+  @@id([crewId, mediaId])
 }
