@@ -99,6 +99,9 @@ export default function header() {
             </a>
           </Link>
         </div>
+        <Link href="/addmedia">
+          <a className="btn btn-blue">Add Media</a>
+        </Link>
         <div>{logbutton}</div>
       </div>
     </nav>
