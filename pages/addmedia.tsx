@@ -29,7 +29,10 @@ export default function addmedia() {
       newResults.push(
         <NewSearchResult key={i} media={media}></NewSearchResult>
       );
-      i += 1;
+      if (media.media_type != "person") {
+        i += 1;
+      }
+
       if (i >= 5) {
         break;
       }

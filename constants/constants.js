@@ -1,7 +1,13 @@
+//Search API
 export const tmdbSearchBase =
   "https://api.themoviedb.org/3/search/multi?api_key=" +
   process.env.NEXT_PUBLIC_TMDB_KEY +
   "&query=";
 
+//Image API
 export const tmdbImgBase = "https://image.tmdb.org/t/p/original/";
 export const tmdbImgBaseSmall = "https://image.tmdb.org/t/p/w200/";
+
+//Detail API
+export const tmdbMovieBase = "https://api.themoviedb.org/3/movie/";
+export const tmdbSeriesBase = "https://api.themoviedb.org/3/tv/";
