@@ -83,6 +83,7 @@ model Media {
   id      Int @id @default(autoincrement())
   tmdbId Int
   title   String
+  tagline String?
   description String
   year Int
   release_date DateTime

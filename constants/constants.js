@@ -1,3 +1,6 @@
+//App API
+export const createMedia = "http://localhost:3000/api/createmedia";
+
 //Search API
 export const tmdbSearchBase =
   "https://api.themoviedb.org/3/search/multi?api_key=" +
@@ -6,7 +9,8 @@ export const tmdbSearchBase =
 
 //Image API
 export const tmdbImgBase = "https://image.tmdb.org/t/p/original/";
-export const tmdbImgBaseSmall = "https://image.tmdb.org/t/p/w200/";
+export const tmdbImgBaseSmall = "https://image.tmdb.org/t/p/w400/";
+export const tmdbImgBaseSmallest = "https://image.tmdb.org/t/p/w200/";
 export const tmdbBackdropBase = "https://image.tmdb.org/t/p/w1280/";
 
 //Detail API

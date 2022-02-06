@@ -1,12 +1,12 @@
 import React from "react";
-import { tmdbImgBase, tmdbImgBaseSmall } from "../constants/constants";
+import { tmdbImgBaseSmallest } from "../constants/constants";
 import Link from "next/link";
 
 export default function NewSearchResult(props: any) {
   let card: JSX.Element = <></>;
   let posterImg;
   if (props.media.poster_path) {
-    posterImg = <img src={tmdbImgBaseSmall + props.media.poster_path} />;
+    posterImg = <img src={tmdbImgBaseSmallest + props.media.poster_path} />;
   }
 
   if (props.media.media_type == "person") {
