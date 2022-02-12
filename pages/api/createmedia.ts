@@ -17,26 +17,36 @@ export default async function handler(req: any, res: any) {
   } = req.body;
 
   try {
-    await prisma.media.create({
-      data: {
-        tmdbId,
-        title,
-        tagline,
-        description,
-        year,
-        release_date,
-        type,
-        poster,
-        backdrop,
-        genres,
-        addedById,
-        verified,
+    const match = await prisma.media.findFirst({
+      where: {
+        tmdbId: tmdbId,
       },
     });
-
-    res.status(200).json({ message: "created successfully" });
+    if (match) {
+      res
+        .status(200)
+        .json({ message: "Record already exists.", duplicate: true });
+    } else {
+      await prisma.media.create({
+        data: {
+          tmdbId,
+          title,
+          tagline,
+          description,
+          year,
+          release_date,
+          type,
+          poster,
+          backdrop,
+          genres,
+          addedById,
+          verified,
+        },
+      });
+      res.status(201).json({ message: "Record created sucessfully" });
+    }
   } catch (error) {
     console.log(error);
-    res.status(400).json({ error });
+    res.status(500).json({ error });
   }
 }

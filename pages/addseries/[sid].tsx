@@ -54,7 +54,10 @@ function castList(castArr: any) {
   let key = 0;
   let maxKey = 5;
   for (let person of castArr) {
-    if (key == maxKey - 1 || key == castArr.length - 1) {
+    if (
+      (key == maxKey - 1 || key == castArr.length - 1) &&
+      castArr.length > 0
+    ) {
       cast.push(
         <span key={key}>
           and <b>{person.name}</b> as {person.character}
@@ -106,7 +109,7 @@ function crewList(crewArr: any) {
 }
 
 export default function AddMovie(props: any) {
-  console.log(props.series);
+  console.log(props);
   let genres = genreList(props.series?.genres);
   let cast = castList(props.cast?.cast);
   let crew = crewList(props.cast?.crew);
@@ -129,11 +132,15 @@ export default function AddMovie(props: any) {
         <img src={tmdbImgBaseSmall + props?.series?.poster_path}></img>
         <div className="flex flex-col space-y-4 bg-primary-light text-black rounded-md p-4 m-4 w-full opacity-80">
           <span className="text-2xl">
+            <span>
+              {props?.series.first_air_date.toString().substring(0, 4)} to{" "}
+              {props?.series.last_air_date.toString().substring(0, 4)} {" | "}
+            </span>
             <i>{genres}</i>
           </span>
           <span className="text-xl">{props?.series?.overview}</span>
           <span className="text-xl">Starring: {cast}</span>
-          <span className="text-xl">{crew}</span>
+          <span className="text-xl"></span>
 
           <button className="btn btn-blue mt-auto self-end">
             Add Movie to MediaTracker

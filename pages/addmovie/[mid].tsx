@@ -83,23 +83,23 @@ function castList(castArr: any) {
   }
   let cast = [];
   let key = 0;
-  let maxKey = 5;
+  let maxKey = 7;
   for (let person of castArr) {
     if (key == maxKey - 1 || key == castArr.length - 1) {
       cast.push(
-        <span key={key}>
+        <div key={key}>
           and <b>{person.name}</b> as {person.character}
-        </span>
+        </div>
       );
     } else {
       cast.push(
-        <span key={key}>
-          <b>{person.name}</b> as {person.character} -{" "}
-        </span>
+        <div key={key}>
+          <b>{person.name}</b> as {person.character}
+        </div>
       );
     }
     key += 1;
-    if (key >= 5) {
+    if (key >= maxKey) {
       break;
     }
   }
@@ -137,7 +137,7 @@ function crewList(crewArr: any) {
 }
 
 async function createMovie(movie: any, user: any, genreStrings: any) {
-  fetch(createMedia, {
+  const res = await fetch(createMedia, {
     body: JSON.stringify({
       tmdbId: movie.id,
       title: movie.title,
@@ -157,18 +157,44 @@ async function createMovie(movie: any, user: any, genreStrings: any) {
       "Content-Type": "application/json",
     },
   });
+  return res.json();
 }
 
 export default function AddMovie(props: any) {
-  console.log(props.user);
+  console.log(props);
+  const [state, setState] = React.useState({
+    createMovieState: <></>,
+  });
+
   let genres = genreList(props.movie?.genres);
   let genreStrings = genreStringList(props.movie?.genres);
   let cast = castList(props.cast?.cast);
   let crew = crewList(props.cast?.crew);
 
   function handleSubmit(e: any) {
+    setState({ createMovieState: <span>Loading</span> });
     e.preventDefault();
-    createMovie(props.movie, props.user, genreStrings);
+
+    createMovie(props.movie, props.user, genreStrings).then((res) => {
+      console.log(res);
+      if (res.duplicate) {
+        setState({
+          createMovieState: (
+            <span className="bg-yellow-200 p-1 rounded">
+              This movie is already in our Database!
+            </span>
+          ),
+        });
+      } else {
+        setState({
+          createMovieState: (
+            <span className="bg-green-200 p-1 rounded">
+              Movie Added Successfully
+            </span>
+          ),
+        });
+      }
+    });
   }
 
   return (
@@ -190,16 +216,23 @@ export default function AddMovie(props: any) {
         <img src={tmdbImgBaseSmall + props?.movie?.poster_path}></img>
         <div className="flex flex-col space-y-4 bg-primary-light text-black rounded-md p-4 m-4 w-full opacity-80">
           <span className="text-2xl">
+            <span>
+              {props?.movie.release_date.toString().substring(0, 4)} {" | "}
+            </span>
             <i>{genres}</i>
           </span>
           <span className="text-xl">{props?.movie.overview}</span>
           <span className="text-xl">Starring: {cast}</span>
           <span className="text-xl">{crew}</span>
 
-          <form onSubmit={handleSubmit}>
-            <button type="submit" className="btn btn-blue mt-auto self-end">
+          <form
+            onSubmit={handleSubmit}
+            className="flex flex-col items-center mt-auto self-center mb-4"
+          >
+            <button type="submit" className="btn btn-blue">
               Add Movie to MediaTracker
             </button>
+            <div className="mt-3">{state.createMovieState}</div>
           </form>
         </div>
       </div>

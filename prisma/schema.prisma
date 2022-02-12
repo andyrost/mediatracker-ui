@@ -50,8 +50,12 @@ model User {
   updatedAt     DateTime  @updatedAt
   accounts      Account[]
   sessions      Session[]
-  watchedMedias WatchedMedia[]
-  addedMedias   Media[]
+  watchedMovies WatchedMovie[]
+  addedMovies   Movie[]
+  watchedSeries WatchedSeries[]
+  watchedSeriesSeason WatchedSeriesSeason[]
+  watchedSeasonEpisode WatchedSeasonEpisode[]
+  addedSeries   Series[]
 }
 
 model VerificationRequest {
@@ -66,68 +70,174 @@ model VerificationRequest {
 }
 
 // Data Tables
-model WatchedMedia {
+model WatchedMovie {
   id        Int @id @default(autoincrement())
   user      User @relation(fields: [userId], references: [id])
   userId    String
-  media     Media @relation(fields: [mediaId], references: [id])
-  mediaId   Int
+  movie     Movie @relation(fields: [movieId], references: [id])
+  movieId   Int
   rating    Float
   timesWatched Int?
-  percentageWatched Float?
+  percentage_watched Float?
   platform  String
 
 }
 
-model Media {
+model WatchedSeries {
+  id        Int @id @default(autoincrement())
+  user      User @relation(fields: [userId], references: [id])
+  userId    String
+  series     Series @relation(fields: [seriesId], references: [id])
+  seriesId   Int
+  rating Float?
+  timesWatched Int?
+  platform String?
+}
+
+model WatchedSeriesSeason {
+  id        Int @id @default(autoincrement())
+  user      User @relation(fields: [userId], references: [id])
+  userId    String
+  seriesSeason     SeriesSeason @relation(fields: [seriesSeasonId], references: [id])
+  seriesSeasonId   Int
+  rating Float?
+  timesWatched Int?
+}
+
+model WatchedSeasonEpisode {
+  id        Int @id @default(autoincrement())
+  user      User @relation(fields: [userId], references: [id])
+  userId    String
+  seasonEpisode     SeasonEpisode @relation(fields: [seasonEpisodeId], references: [id])
+  seasonEpisodeId   Int
+  rating Float?
+  timesWatched Int?
+}
+
+model Movie {
   id      Int @id @default(autoincrement())
+  cast   CastInMovie[]
+  crew CrewInMovie[]
+  addedBy User? @relation(fields: [addedById], references: [id])
+  addedById String?
   tmdbId Int
+  watchedBy WatchedMovie[]
+   verified Boolean @default(false)
   title   String
   tagline String?
-  description String
-  year Int
-  release_date DateTime
-  type    String
+  description String?
+  releaseDate DateTime?
   poster  String?
   backdrop String?
   genres  String[]
-  cast   CastInMedia[]
-  crew CrewInMedia[]
+  budget Float?
+  revenue Float?
+  runtime Float?
+  status String?
+}
+
+model Series {
+  id Int @id @default(autoincrement())
+  seasons SeriesSeason[]
+  cast CastInSeries[]
+  crew CrewInSeries[]
   addedBy User? @relation(fields: [addedById], references: [id])
   addedById String?
-  watchedBy WatchedMedia[]
+  watchedBy WatchedSeries[]
   verified Boolean @default(false)
+  title String
+  tagline String?
+  overview String?
+  type String?
+  genres String[]
+  firstAirDate DateTime?
+  lastAirDate DateTime?
+  poster String?
+  backdrop String?
+  seasonCount Int?
+  episodeCount Int?
+  status String?
+}
+
+model SeriesSeason {
+  id Int @id @default(autoincrement())
+  series Series @relation(fields: [seriesId], references: [id])
+  seriesId Int
+  watchedBy WatchedSeriesSeason[]
+  episodes SeasonEpisode[]
+  tmdbId Int?
+  name String
+  overview String?
+  poster String?
+  airDate DateTime?
+  episodeCount Int?
+  seasonNumber Int?
+}
+
+model SeasonEpisode {
+  id Int @id @default(autoincrement())
+  season SeriesSeason @relation(fields: [seasonId], references: [id])
+  seasonId Int
+  watchedBy WatchedSeasonEpisode[]
+  tmdbId Int?
+  name String
+  overview String?
+  poster String?
+  episodeNumber Int?
 }
 
 model Cast {
   id      Int @id @default(autoincrement())
+  involvedMovie CastInMovie[]
+  involvedSeries CastInSeries[]
   name String
-  nationality String
-  involvedMedia CastInMedia[]
+  nationality String?
 
 }
 
-model CastInMedia{
+model CastInMovie{
   cast Cast @relation(fields:[castId], references:[id])
   castId Int
-  media Media @relation(fields:[mediaId], references: [id])
-  mediaId Int 
+  movie Movie @relation(fields:[movieId], references: [id])
+  movieId Int 
   character String
 
-  @@id([castId, mediaId])
+  @@id([castId, movieId])
+}
+
+model CastInSeries{
+  cast Cast @relation(fields:[castId], references:[id])
+  castId Int
+  series Series @relation(fields: [seriesId], references: [id])
+  seriesId Int
+  character String
+
+  @@id([castId, seriesId])
 }
 
 model Crew {
   id Int @id @default(autoincrement())
+  involvedMovie CrewInMovie[]
+  involvedSeries CrewInSeries[]
   name String
-  involvedMedia CrewInMedia[]
 }
 
-model CrewInMedia {
+model CrewInMovie {
   crew Crew @relation(fields:[crewId], references: [id])
   crewId Int
-  media Media @relation(fields:[mediaId], references: [id])
-  mediaId Int
+  movie Movie @relation(fields:[movieId], references: [id])
+  movieId Int
+  job String
 
-  @@id([crewId, mediaId])
+  @@id([crewId, movieId])
+}
+
+model CrewInSeries {
+  crew Crew @relation(fields:[crewId], references: [id])
+  crewId Int
+  series Series @relation(fields:[seriesId], references: [id])
+  seriesId Int
+  job String
+
+  @@id([crewId, seriesId])
 }
