@@ -4,7 +4,8 @@ import { useRouter } from "next/router";
 import { getSession } from "next-auth/client";
 import prisma from "../../lib/prisma";
 import {
-  createMedia,
+  createMovie,
+  createCast,
   tmdbBackdropBase,
   tmdbImgBase,
   tmdbImgBaseSmall,
@@ -136,21 +137,38 @@ function crewList(crewArr: any) {
   return crew;
 }
 
-async function createMovie(movie: any, user: any, genreStrings: any) {
-  const res = await fetch(createMedia, {
+async function createMovieAPI(movie: any, user: any, genreStrings: any) {
+  const res = await fetch(createMovie, {
     body: JSON.stringify({
+      addedById: user.userId,
       tmdbId: movie.id,
+      verified: false,
       title: movie.title,
       tagline: movie.tagline,
       description: movie.overview,
-      year: Number(movie.release_date.toString().substring(0, 4)),
-      release_date: new Date(movie.release_date),
-      type: "movie",
+      releaseDate: new Date(movie.release_date),
       poster: movie.poster_path,
       backdrop: movie.backdrop_path,
       genres: genreStrings,
-      addedById: user.userId,
-      verified: false,
+      budget: movie.budget,
+      revenue: movie.revenue,
+      runtime: movie.runtime,
+      status: movie.status,
+    }),
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+  });
+  return res.json();
+}
+
+async function createCastCrewAPI(cast: any, crew: any, movieId: number) {
+  const res = await fetch(createCast, {
+    body: JSON.stringify({
+      castArr: cast,
+      crewArr: crew,
+      movieId: movieId,
     }),
     method: "POST",
     headers: {
@@ -164,6 +182,7 @@ export default function AddMovie(props: any) {
   console.log(props);
   const [state, setState] = React.useState({
     createMovieState: <></>,
+    duplicateMovie: <></>,
   });
 
   let genres = genreList(props.movie?.genres);
@@ -171,22 +190,29 @@ export default function AddMovie(props: any) {
   let cast = castList(props.cast?.cast);
   let crew = crewList(props.cast?.crew);
 
-  function handleSubmit(e: any) {
-    setState({ createMovieState: <span>Loading</span> });
+  async function handleSubmit(e: any) {
+    setState({
+      duplicateMovie: <></>,
+      createMovieState: <span className="bg-white p-1 rounded">Loading</span>,
+    });
     e.preventDefault();
 
-    createMovie(props.movie, props.user, genreStrings).then((res) => {
-      console.log(res);
+    let movieId;
+
+    await createMovieAPI(props.movie, props.user, genreStrings).then((res) => {
+      movieId = res.movieId;
       if (res.duplicate) {
         setState({
-          createMovieState: (
+          createMovieState: <></>,
+          duplicateMovie: (
             <span className="bg-yellow-200 p-1 rounded">
-              This movie is already in our Database!
+              This movie is already in the database!
             </span>
           ),
         });
       } else {
         setState({
+          ...state,
           createMovieState: (
             <span className="bg-green-200 p-1 rounded">
               Movie Added Successfully
@@ -195,6 +221,14 @@ export default function AddMovie(props: any) {
         });
       }
     });
+
+    if (movieId) {
+      await createCastCrewAPI(props.cast?.cast, props.cast?.crew, movieId).then(
+        (res) => {
+          console.log(res);
+        }
+      );
+    }
   }
 
   return (
@@ -233,6 +267,7 @@ export default function AddMovie(props: any) {
               Add Movie to MediaTracker
             </button>
             <div className="mt-3">{state.createMovieState}</div>
+            <div className="mt-3">{state.duplicateMovie}</div>
           </form>
         </div>
       </div>

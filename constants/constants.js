@@ -1,5 +1,6 @@
 //App API
-export const createMedia = "http://localhost:3000/api/createmedia";
+export const createMovie = "http://localhost:3000/api/createmovie";
+export const createCast = "http://localhost:3000/api/createcast";
 
 //Search API
 export const tmdbSearchBase =

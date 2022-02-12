@@ -6,44 +6,52 @@ export default async function handler(req: any, res: any) {
     title,
     tagline,
     description,
-    year,
-    release_date,
-    type,
+    releaseDate,
     poster,
     backdrop,
     genres,
     addedById,
     verified,
+    budget,
+    revenue,
+    runtime,
+    status,
   } = req.body;
 
   try {
-    const match = await prisma.media.findFirst({
+    const match = await prisma.movie.findFirst({
       where: {
         tmdbId: tmdbId,
       },
     });
     if (match) {
-      res
-        .status(200)
-        .json({ message: "Record already exists.", duplicate: true });
+      res.status(200).json({
+        message: "Record already exists.",
+        duplicate: true,
+        movieId: match.id,
+      });
     } else {
-      await prisma.media.create({
+      const movie = await prisma.movie.create({
         data: {
+          addedById,
           tmdbId,
+          verified,
           title,
           tagline,
           description,
-          year,
-          release_date,
-          type,
+          releaseDate,
           poster,
           backdrop,
           genres,
-          addedById,
-          verified,
+          budget,
+          revenue,
+          runtime,
+          status,
         },
       });
-      res.status(201).json({ message: "Record created sucessfully" });
+      res
+        .status(201)
+        .json({ message: "Record created sucessfully", movieId: movie.id });
     }
   } catch (error) {
     console.log(error);

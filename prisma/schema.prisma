@@ -122,7 +122,7 @@ model Movie {
   addedById String?
   tmdbId Int
   watchedBy WatchedMovie[]
-   verified Boolean @default(false)
+  verified Boolean @default(false)
   title   String
   tagline String?
   description String?
@@ -190,6 +190,7 @@ model Cast {
   id      Int @id @default(autoincrement())
   involvedMovie CastInMovie[]
   involvedSeries CastInSeries[]
+  tmdbId Int
   name String
   nationality String?
 
@@ -219,6 +220,7 @@ model Crew {
   id Int @id @default(autoincrement())
   involvedMovie CrewInMovie[]
   involvedSeries CrewInSeries[]
+  tmdbId Int
   name String
 }
 
