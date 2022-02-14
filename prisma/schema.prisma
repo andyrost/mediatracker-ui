@@ -120,7 +120,7 @@ model Movie {
   crew CrewInMovie[]
   addedBy User? @relation(fields: [addedById], references: [id])
   addedById String?
-  tmdbId Int
+  tmdbId Int @unique
   watchedBy WatchedMovie[]
   verified Boolean @default(false)
   title   String
@@ -143,6 +143,7 @@ model Series {
   crew CrewInSeries[]
   addedBy User? @relation(fields: [addedById], references: [id])
   addedById String?
+  tmdbId Int @unique
   watchedBy WatchedSeries[]
   verified Boolean @default(false)
   title String
@@ -165,7 +166,7 @@ model SeriesSeason {
   seriesId Int
   watchedBy WatchedSeriesSeason[]
   episodes SeasonEpisode[]
-  tmdbId Int?
+  tmdbId Int? @unique
   name String
   overview String?
   poster String?
@@ -179,7 +180,7 @@ model SeasonEpisode {
   season SeriesSeason @relation(fields: [seasonId], references: [id])
   seasonId Int
   watchedBy WatchedSeasonEpisode[]
-  tmdbId Int?
+  tmdbId Int? @unique
   name String
   overview String?
   poster String?
@@ -190,7 +191,7 @@ model Cast {
   id      Int @id @default(autoincrement())
   involvedMovie CastInMovie[]
   involvedSeries CastInSeries[]
-  tmdbId Int
+  tmdbId Int @unique
   name String
   nationality String?
 
@@ -220,7 +221,7 @@ model Crew {
   id Int @id @default(autoincrement())
   involvedMovie CrewInMovie[]
   involvedSeries CrewInSeries[]
-  tmdbId Int
+  tmdbId Int @unique
   name String
 }
 
