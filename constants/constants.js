@@ -9,6 +9,7 @@ export const tmdbSearchBase =
   "&query=";
 
 //Image API
+export const tmdbImg = "https://image.tmdb.org/t/p/";
 export const tmdbImgBase = "https://image.tmdb.org/t/p/original/";
 export const tmdbImgBaseSmall = "https://image.tmdb.org/t/p/w400/";
 export const tmdbImgBaseSmallest = "https://image.tmdb.org/t/p/w200/";

@@ -1,14 +1,11 @@
 import React from "react";
-import { GetServerSideProps } from "next";
-import { useRouter } from "next/router";
 import {
-  tmdbBackdropBase,
+  tmdbImg,
   tmdbImgBase,
-  tmdbImgBaseSmall,
   tmdbKeyTail,
   tmdbSeriesBase,
 } from "../../constants/constants";
-import Link from "next/link";
+import Image from "next/image";
 
 export const getServerSideProps = async (context: any) => {
   console.log(context.query);
@@ -107,6 +104,10 @@ function crewList(crewArr: any) {
 
   return crew;
 }
+const posterLoader = ({ src, width, quality }: any) => {
+  let stepwidth = 342;
+  return `${tmdbImg}w${stepwidth}${src}`;
+};
 
 export default function AddMovie(props: any) {
   console.log(props);
@@ -114,7 +115,7 @@ export default function AddMovie(props: any) {
   let cast = castList(props.cast?.cast);
   let crew = crewList(props.cast?.crew);
   return (
-    <div className="flex flex-col justify-center items-center">
+    <div className="-mt-28 flex flex-col justify-center items-center">
       <img
         className="w-3/5"
         src={tmdbImgBase + props?.series?.backdrop_path}
@@ -129,7 +130,14 @@ export default function AddMovie(props: any) {
         <span className="text-xl mb-20 h-8">{props?.series?.tagline}</span>
       </div>
       <div className="flex -mt-20 w-3/5 p-4">
-        <img src={tmdbImgBaseSmall + props?.series?.poster_path}></img>
+        <div>
+          <Image
+            loader={posterLoader}
+            src={props?.series?.poster_path}
+            width={400}
+            height={600}
+          ></Image>
+        </div>
         <div className="flex flex-col space-y-4 bg-primary-light text-black rounded-md p-4 m-4 w-full opacity-80">
           <span className="text-2xl">
             <span>

@@ -47,7 +47,7 @@ export default function header() {
   }
 
   return (
-    <nav className="fixed w-full flex items-center justify-between flex-wrap bg-primary dark:bg-primary-dark p-6">
+    <nav className="z-10 fixed w-full flex items-center justify-between flex-wrap bg-primary dark:bg-primary-dark p-6">
       <div className="flex items-center flex-shrink-0 text-white mr-6">
         <Image src={initalsLogo} height={60} width={90} />
         <span className="font-bold font-mono text-3xl tracking-tight">
