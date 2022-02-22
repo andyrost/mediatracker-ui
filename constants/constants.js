@@ -1,5 +1,6 @@
 //App API
 export const createMovie = "http://localhost:3000/api/createmovie";
+export const createSeries = "http://localhost:3000/api/createseries";
 export const createCast = "http://localhost:3000/api/createcast";
 
 //Search API

@@ -79,7 +79,10 @@ model WatchedMovie {
   rating    Float
   timesWatched Int?
   percentage_watched Float?
-  platform  String
+  platform  String?
+  watchedAt     DateTime?
+  createdAt     DateTime  @default(now())
+  updatedAt     DateTime  @updatedAt
 
 }
 
@@ -92,6 +95,9 @@ model WatchedSeries {
   rating Float?
   timesWatched Int?
   platform String?
+  watchedAt     DateTime?
+  createdAt     DateTime  @default(now())
+  updatedAt     DateTime  @updatedAt
 }
 
 model WatchedSeriesSeason {
@@ -102,6 +108,9 @@ model WatchedSeriesSeason {
   seriesSeasonId   Int
   rating Float?
   timesWatched Int?
+  watchedAt     DateTime?
+  createdAt     DateTime  @default(now())
+  updatedAt     DateTime  @updatedAt
 }
 
 model WatchedSeasonEpisode {
@@ -112,17 +121,20 @@ model WatchedSeasonEpisode {
   seasonEpisodeId   Int
   rating Float?
   timesWatched Int?
+  watchedAt     DateTime?
+  createdAt     DateTime  @default(now())
+  updatedAt     DateTime  @updatedAt
 }
 
 model Movie {
   id      Int @id @default(autoincrement())
   cast   CastInMovie[]
   crew CrewInMovie[]
+  watchedBy WatchedMovie[]
   addedBy User? @relation(fields: [addedById], references: [id])
+  verified Boolean @default(false)
   addedById String?
   tmdbId Int @unique
-  watchedBy WatchedMovie[]
-  verified Boolean @default(false)
   title   String
   tagline String?
   description String?
@@ -134,6 +146,8 @@ model Movie {
   revenue Float?
   runtime Float?
   status String?
+  createdAt     DateTime  @default(now())
+  updatedAt     DateTime  @updatedAt
 }
 
 model Series {
@@ -141,11 +155,11 @@ model Series {
   seasons SeriesSeason[]
   cast CastInSeries[]
   crew CrewInSeries[]
+  watchedBy WatchedSeries[]
   addedBy User? @relation(fields: [addedById], references: [id])
+  verified Boolean @default(false)
   addedById String?
   tmdbId Int @unique
-  watchedBy WatchedSeries[]
-  verified Boolean @default(false)
   title String
   tagline String?
   overview String?
@@ -158,6 +172,8 @@ model Series {
   seasonCount Int?
   episodeCount Int?
   status String?
+  createdAt     DateTime  @default(now())
+  updatedAt     DateTime  @updatedAt
 }
 
 model SeriesSeason {
@@ -173,6 +189,8 @@ model SeriesSeason {
   airDate DateTime?
   episodeCount Int?
   seasonNumber Int?
+  createdAt     DateTime  @default(now())
+  updatedAt     DateTime  @updatedAt
 }
 
 model SeasonEpisode {
@@ -185,6 +203,9 @@ model SeasonEpisode {
   overview String?
   poster String?
   episodeNumber Int?
+  airDate DateTime?
+  createdAt     DateTime  @default(now())
+  updatedAt     DateTime  @updatedAt
 }
 
 model Cast {
@@ -194,7 +215,8 @@ model Cast {
   tmdbId Int @unique
   name String
   nationality String?
-
+  createdAt     DateTime  @default(now())
+  updatedAt     DateTime  @updatedAt
 }
 
 model CastInMovie{
@@ -203,6 +225,8 @@ model CastInMovie{
   movie Movie @relation(fields:[movieId], references: [id])
   movieId Int 
   character String
+  createdAt     DateTime  @default(now())
+  updatedAt     DateTime  @updatedAt
 
   @@id([castId, movieId])
 }
@@ -213,6 +237,8 @@ model CastInSeries{
   series Series @relation(fields: [seriesId], references: [id])
   seriesId Int
   character String
+  createdAt     DateTime  @default(now())
+  updatedAt     DateTime  @updatedAt
 
   @@id([castId, seriesId])
 }
@@ -223,6 +249,8 @@ model Crew {
   involvedSeries CrewInSeries[]
   tmdbId Int @unique
   name String
+  createdAt     DateTime  @default(now())
+  updatedAt     DateTime  @updatedAt
 }
 
 model CrewInMovie {
@@ -231,6 +259,8 @@ model CrewInMovie {
   movie Movie @relation(fields:[movieId], references: [id])
   movieId Int
   job String
+  createdAt     DateTime  @default(now())
+  updatedAt     DateTime  @updatedAt
 
   @@id([crewId, movieId])
 }
@@ -241,6 +271,8 @@ model CrewInSeries {
   series Series @relation(fields:[seriesId], references: [id])
   seriesId Int
   job String
+  createdAt     DateTime  @default(now())
+  updatedAt     DateTime  @updatedAt
 
   @@id([crewId, seriesId])
 }

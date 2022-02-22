@@ -1,9 +1,13 @@
 import React from "react";
+import { getSession } from "next-auth/client";
+import prisma from "../../lib/prisma";
 import {
   tmdbImg,
   tmdbImgBase,
   tmdbKeyTail,
   tmdbSeriesBase,
+  createSeries,
+  createCast,
 } from "../../constants/constants";
 import Image from "next/image";
 
@@ -23,7 +27,24 @@ export const getServerSideProps = async (context: any) => {
   });
   const cast: any = await res2.json();
 
-  return { props: { series, cast } };
+  const session = await getSession(context);
+
+  if (session && session.accessToken) {
+    var accessToken: string = session.accessToken || "unknown";
+  } else {
+    var accessToken: string = "unknown";
+  }
+  const user = await prisma.session.findUnique({
+    where: {
+      accessToken: accessToken,
+    },
+    select: {
+      userId: true,
+      user: true,
+    },
+  });
+
+  return { props: { series, cast, user } };
 };
 
 function genreList(genreArr: any) {
@@ -41,6 +62,17 @@ function genreList(genreArr: any) {
     key += 1;
   }
   return genres;
+}
+
+function genreStringList(genreArr: any) {
+  if (!genreArr) {
+    return [""];
+  }
+  let genreStrings = [];
+  for (let genre of genreArr) {
+    genreStrings.push(genre.name);
+  }
+  return genreStrings;
 }
 
 function castList(castArr: any) {
@@ -109,11 +141,92 @@ const posterLoader = ({ src, width, quality }: any) => {
   return `${tmdbImg}w${stepwidth}${src}`;
 };
 
-export default function AddMovie(props: any) {
+async function createSeriesAPI(series: any, user: any, genreStrings: any) {
+  const res = await fetch(createSeries, {
+    body: JSON.stringify({
+      series: series,
+      genres: genreStrings,
+      userId: user.userId,
+    }),
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+  });
+  return res.json();
+}
+
+async function createCastCrewAPI(cast: any, crew: any, seriesId: number) {
+  const res = await fetch(createCast, {
+    body: JSON.stringify({
+      castArr: cast,
+      crewArr: crew,
+      mediaId: seriesId,
+      type: "series",
+    }),
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+  });
+  return res.json();
+}
+
+export default function AddSeries(props: any) {
+  const [state, setState] = React.useState({
+    createSeriesState: <></>,
+    duplicateSeries: <></>,
+  });
   console.log(props);
   let genres = genreList(props.series?.genres);
+  let genreStrings = genreStringList(props.series?.genres);
   let cast = castList(props.cast?.cast);
   let crew = crewList(props.cast?.crew);
+
+  async function handleSubmit(e: any) {
+    setState({
+      duplicateSeries: <></>,
+      createSeriesState: <span className="bg-white p-1 rounded">Loading</span>,
+    });
+    e.preventDefault();
+
+    let seriesId;
+
+    await createSeriesAPI(props.series, props.user, genreStrings).then(
+      (res) => {
+        seriesId = res.seriesId;
+        if (res.isDuplicateSeries) {
+          setState({
+            createSeriesState: <></>,
+            duplicateSeries: (
+              <span className="bg-yellow-200 p-1 rounded">
+                This series is already in the database!
+              </span>
+            ),
+          });
+        } else {
+          setState({
+            ...state,
+            createSeriesState: (
+              <span className="bg-green-200 p-1 rounded">
+                Series Added Successfully
+              </span>
+            ),
+          });
+        }
+      }
+    );
+
+    if (seriesId) {
+      await createCastCrewAPI(
+        props.cast?.cast,
+        props.cast?.crew,
+        seriesId
+      ).then((res) => {
+        console.log(res);
+      });
+    }
+  }
   return (
     <div className="-mt-28 flex flex-col justify-center items-center">
       <img
@@ -150,9 +263,16 @@ export default function AddMovie(props: any) {
           <span className="text-xl">Starring: {cast}</span>
           <span className="text-xl"></span>
 
-          <button className="btn btn-blue mt-auto self-end">
-            Add Movie to MediaTracker
-          </button>
+          <form
+            onSubmit={handleSubmit}
+            className="flex flex-col items-center mt-auto self-center mb-4"
+          >
+            <button type="submit" className="btn btn-blue">
+              Add Series to MediaTracker
+            </button>
+            <div className="mt-3">{state.createSeriesState}</div>
+            <div className="mt-3">{state.duplicateSeries}</div>
+          </form>
         </div>
       </div>
     </div>

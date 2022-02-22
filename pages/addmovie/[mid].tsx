@@ -171,7 +171,8 @@ async function createCastCrewAPI(cast: any, crew: any, movieId: number) {
     body: JSON.stringify({
       castArr: cast,
       crewArr: crew,
-      movieId: movieId,
+      mediaId: movieId,
+      type: "movie",
     }),
     method: "POST",
     headers: {
