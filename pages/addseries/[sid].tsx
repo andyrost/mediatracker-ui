@@ -228,13 +228,13 @@ export default function AddSeries(props: any) {
     }
   }
   return (
-    <div className="-mt-28 flex flex-col justify-center items-center">
+    <div className="flex flex-col justify-center items-center">
       <img
-        className="w-3/5"
+        className="w-4/5"
         src={tmdbImgBase + props?.series?.backdrop_path}
       ></img>
       <div
-        className="flex flex-col m-4 p-4 w-3/5
+        className="flex flex-col m-4 p-4 w-4/5
         -mt-60 bg-gradient-to-t  from-primary-dark text-white"
       >
         <span className="text-6xl mt-10 mb-2">
@@ -242,7 +242,7 @@ export default function AddSeries(props: any) {
         </span>
         <span className="text-xl mb-20 h-8">{props?.series?.tagline}</span>
       </div>
-      <div className="flex -mt-20 w-3/5 p-4">
+      <div className="flex -mt-20 w-4/5 p-4">
         <div>
           <Image
             loader={posterLoader}

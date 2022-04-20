@@ -1,11 +1,19 @@
 import Head from "next/head";
 
 import Carousel from "../components/carousel";
+import MediaCard from "../components/MediaCard";
 import Unauthorized from "./Unauthorized";
 import { useSession } from "next-auth/client";
+import prisma from "../lib/prisma";
 
-export default function Home() {
+export const getServerSideProps = async (context: any) => {
+  const allMoviesTEST = await prisma.movie.findMany({});
+  return { props: { allMoviesTEST } };
+};
+
+export default function Home(props: any) {
   const [session, loading] = useSession();
+  console.log(props.allMoviesTEST);
   if (session) {
     console.log(session);
     return (
@@ -20,10 +28,23 @@ export default function Home() {
           <h1 className="text-white font-bold text-2xl m-4">
             Welcome, {session?.user?.name}
           </h1>
+
           <h2 className="ml-4 text-white font-semibold text-xl">
             Recently Watched...
           </h2>
-          <Carousel />
+          <div className="m-4 flex overflow-hidden">
+            {props.allMoviesTEST.map((item: any) => {
+              let card = (
+                <MediaCard
+                  title={item.title}
+                  poster={item.poster}
+                  key={item.id}
+                ></MediaCard>
+              );
+
+              return card;
+            })}
+          </div>
           <h2 className="ml-4 text-white mt-2 font-semibold text-xl">
             Your List...
           </h2>

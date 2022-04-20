@@ -236,13 +236,13 @@ export default function AddMovie(props: any) {
   }
 
   return (
-    <div className="flex flex-col justify-center items-center -mt-28">
+    <div className="flex flex-col justify-center items-center">
       <img
-        className="w-3/5"
+        className="w-4/5"
         src={tmdbImgBase + props?.movie?.backdrop_path}
       ></img>
       <div
-        className="flex flex-col m-4 p-4 w-3/5
+        className="flex flex-col m-4 p-4 w-4/5
         -mt-60 bg-gradient-to-t  from-primary-dark text-white"
       >
         <span className="text-6xl mt-10 mb-2">
@@ -250,7 +250,7 @@ export default function AddMovie(props: any) {
         </span>
         <span className="text-xl mb-20 h-8">{props?.movie.tagline}</span>
       </div>
-      <div className="flex -mt-20 w-3/5 p-4">
+      <div className="flex -mt-20 w-4/5 p-4">
         <div>
           <Image
             loader={posterLoader}
