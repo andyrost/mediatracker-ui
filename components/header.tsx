@@ -4,13 +4,22 @@ import Image from "next/image";
 import { useRouter } from "next/router";
 import { signIn, signOut, useSession } from "next-auth/client";
 import initalsLogo from "../public/initialsLogo.png";
+import { SearchIcon } from "@heroicons/react/solid";
 
 export default function header() {
   const router = useRouter();
   const [session, loading] = useSession();
 
+  const [state, setState] = React.useState({
+    search: "",
+  });
+
   var logbutton;
   var profilepic = <div></div>;
+
+  function handleChange(e: any) {
+    setState({ ...state, [e.target.name]: e.target.value });
+  }
 
   const navlink =
     "transition duration-200 block mt-4 lg:inline-block lg:mt-0 text-white hover:text-primary-light mr-6 text-lg";
@@ -30,7 +39,10 @@ export default function header() {
     }
     logbutton = (
       <div className="flex">
-        <button className="btn btn-blue h-10 m-3" onClick={() => signOut()}>
+        <button
+          className="btn btn-blue h-10 mx-2 mt-3"
+          onClick={() => signOut()}
+        >
           Logout
         </button>
         <div className="rounded-full bg-white h-16 w-16">{profilepic}</div>
@@ -39,7 +51,10 @@ export default function header() {
   } else {
     logbutton = (
       <div className="flex">
-        <button className="btn btn-blue h-10 m-3" onClick={() => signIn()}>
+        <button
+          className="btn btn-blue h-10 mx-2 mt-3"
+          onClick={() => signIn()}
+        >
           Login
         </button>
       </div>
@@ -89,8 +104,26 @@ export default function header() {
             </a>
           </Link>
         </div>
+        <div className="mx-2">
+          <form>
+            <input
+              name="search"
+              className="rounded-l py-2 px-4 h-10 focus:outline-none align-middle shadow-md"
+              value={state.search}
+              onChange={handleChange}
+              placeholder="Search here..."
+              required
+            />
+            <button
+              className="h-10 bg-primary-light2 hover:bg-primary-light text-primary-dark py-2 px-4 rounded-r align-middle shadow-md"
+              type="submit"
+            >
+              <SearchIcon className="h-5 w-5 text-blue-500" />
+            </button>
+          </form>
+        </div>
         <Link href="/addmedia">
-          <a className="btn btn-blue">Add Media</a>
+          <a className="btn btn-blue m-2">Add Media</a>
         </Link>
         <div>{logbutton}</div>
       </div>

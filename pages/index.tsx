@@ -1,5 +1,5 @@
 import Head from "next/head";
-
+import React from "react";
 import Carousel from "../components/carousel";
 import MediaCard from "../components/MediaCard";
 import Unauthorized from "./Unauthorized";
@@ -13,7 +13,12 @@ export const getServerSideProps = async (context: any) => {
 
 export default function Home(props: any) {
   const [session, loading] = useSession();
-  console.log(props.allMoviesTEST);
+
+  const [state, setState] = React.useState({
+    moviesTest: props.allMoviesTEST.slice(0, 5),
+  });
+  let maxMoviesTest = 10;
+
   if (session) {
     console.log(session);
     return (
@@ -33,7 +38,7 @@ export default function Home(props: any) {
             Recently Watched...
           </h2>
           <div className="m-4 flex overflow-hidden">
-            {props.allMoviesTEST.map((item: any) => {
+            {state.moviesTest.map((item: any) => {
               let card = (
                 <MediaCard
                   title={item.title}
