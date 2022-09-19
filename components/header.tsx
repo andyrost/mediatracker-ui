@@ -21,6 +21,11 @@ export default function header() {
     setState({ ...state, [e.target.name]: e.target.value });
   }
 
+  function handleSubmit(e: any) {
+    e.preventDefault();
+    router.push("/search/" + state.search);
+  }
+
   const navlink =
     "transition duration-200 block mt-4 lg:inline-block lg:mt-0 text-white hover:text-primary-light mr-6 text-lg";
   const navlinkactive =
@@ -105,7 +110,7 @@ export default function header() {
           </Link>
         </div>
         <div className="mx-2">
-          <form>
+          <form onSubmit={handleSubmit}>
             <input
               name="search"
               className="rounded-l py-2 px-4 h-10 focus:outline-none align-middle shadow-md"

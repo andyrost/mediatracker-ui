@@ -79,6 +79,7 @@ export default async function handler(req: any, res: any) {
           if (newseason.createdAt != newseason.updatedAt) {
             duplicateSeasons += 1;
           }
+          console.log(newseason);
         } catch (error) {
           //Fill
         }
@@ -92,7 +93,6 @@ export default async function handler(req: any, res: any) {
           method: "GET",
         });
         const fullseason = await seasonres.json();
-        console.log(seasonurl);
         if (seasonId != -1) {
           for (let episode of fullseason.episodes) {
             try {

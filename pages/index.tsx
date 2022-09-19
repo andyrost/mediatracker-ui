@@ -15,7 +15,7 @@ export default function Home(props: any) {
   const [session, loading] = useSession();
 
   const [state, setState] = React.useState({
-    moviesTest: props.allMoviesTEST.slice(0, 5),
+    moviesTest: props.allMoviesTEST.slice(-5),
   });
   let maxMoviesTest = 10;
 
