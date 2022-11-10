@@ -77,7 +77,7 @@ export default function SearchResults(props: any) {
       mresults: props.mresults,
       sresults: props.sresults,
     });
-  });
+  }, []);
 
   return (
     <>
@@ -89,7 +89,9 @@ export default function SearchResults(props: any) {
             let card = (
               <MediaCard
                 title={item.title}
+                mediaType="movie"
                 poster={item.poster}
+                id={item.id}
                 key={item.id}
               ></MediaCard>
             );
@@ -107,7 +109,9 @@ export default function SearchResults(props: any) {
             let card = (
               <MediaCard
                 title={item.title}
+                mediaType="series"
                 poster={item.poster}
+                id={item.id}
                 key={item.id}
               ></MediaCard>
             );

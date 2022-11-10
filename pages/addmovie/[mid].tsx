@@ -13,7 +13,6 @@ import {
 import Image from "next/image";
 
 export const getServerSideProps = async (context: any) => {
-  console.log(context.query);
   const { mid } = context.query;
   let url = tmdbMovieBase + mid + tmdbKeyTail;
   let casturl = tmdbMovieBase + mid + "/credits" + tmdbKeyTail;

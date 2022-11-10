@@ -52,11 +52,13 @@ model User {
   accounts      Account[]
   sessions      Session[]
   watchedMovies WatchedMovie[]
+  listMovies    ListMovie[]
   addedMovies   Movie[]
   watchedSeries WatchedSeries[]
   watchedSeriesSeason WatchedSeriesSeason[]
   watchedSeasonEpisode WatchedSeasonEpisode[]
   addedSeries   Series[]
+  listSeries    ListSeries[]
 }
 
 model VerificationRequest {
@@ -87,6 +89,17 @@ model WatchedMovie {
 
 }
 
+model ListMovie {
+  id        Int @id @default(autoincrement())
+  user      User @relation(fields: [userId], references: [id])
+  userId    String
+  movie     Movie @relation(fields: [movieId], references: [id])
+  movieId   Int
+  createdAt     DateTime  @default(now())
+  updatedAt     DateTime  @updatedAt
+
+}
+
 model WatchedSeries {
   id        Int @id @default(autoincrement())
   user      User @relation(fields: [userId], references: [id])
@@ -97,6 +110,16 @@ model WatchedSeries {
   timesWatched Int?
   platform String?
   watchedAt     DateTime?
+  createdAt     DateTime  @default(now())
+  updatedAt     DateTime  @updatedAt
+}
+
+model ListSeries {
+  id        Int @id @default(autoincrement())
+  user      User @relation(fields: [userId], references: [id])
+  userId    String
+  series     Series @relation(fields: [seriesId], references: [id])
+  seriesId   Int
   createdAt     DateTime  @default(now())
   updatedAt     DateTime  @updatedAt
 }
@@ -132,6 +155,7 @@ model Movie {
   cast   CastInMovie[]
   crew CrewInMovie[]
   watchedBy WatchedMovie[]
+  listBy ListMovie[]
   addedBy User? @relation(fields: [addedById], references: [id])
   verified Boolean @default(false)
   addedById String?
@@ -157,6 +181,7 @@ model Series {
   cast CastInSeries[]
   crew CrewInSeries[]
   watchedBy WatchedSeries[]
+  listBy ListSeries[]
   addedBy User? @relation(fields: [addedById], references: [id])
   verified Boolean @default(false)
   addedById String?
@@ -226,6 +251,7 @@ model CastInMovie{
   movie Movie @relation(fields:[movieId], references: [id])
   movieId Int 
   character String
+  importance Int?
   createdAt     DateTime  @default(now())
   updatedAt     DateTime  @updatedAt
 
@@ -238,6 +264,7 @@ model CastInSeries{
   series Series @relation(fields: [seriesId], references: [id])
   seriesId Int
   character String
+  importance Int?
   createdAt     DateTime  @default(now())
   updatedAt     DateTime  @updatedAt
 
@@ -260,6 +287,7 @@ model CrewInMovie {
   movie Movie @relation(fields:[movieId], references: [id])
   movieId Int
   job String
+  importance Int?
   createdAt     DateTime  @default(now())
   updatedAt     DateTime  @updatedAt
 
@@ -272,6 +300,7 @@ model CrewInSeries {
   series Series @relation(fields:[seriesId], references: [id])
   seriesId Int
   job String
+  importance Int?
   createdAt     DateTime  @default(now())
   updatedAt     DateTime  @updatedAt
 

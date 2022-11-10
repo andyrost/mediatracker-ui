@@ -3,8 +3,12 @@ import { tmdbImgBaseSmallest } from "../constants/constants";
 import Link from "next/link";
 
 export default function MediaCard(props: any) {
+  let href = "/";
+  if (props.mediaType && props.mediaType == "movie") {
+    href = "/movie/" + props.id;
+  }
   return (
-    <Link href="">
+    <Link href={href}>
       <a
         className="rounded-md m-1 bg-center bg-cover"
         style={{

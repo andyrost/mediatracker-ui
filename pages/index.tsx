@@ -8,16 +8,27 @@ import prisma from "../lib/prisma";
 
 export const getServerSideProps = async (context: any) => {
   const allMoviesTEST = await prisma.movie.findMany({});
-  return { props: { allMoviesTEST } };
+  const allSeriesTEST = await prisma.series.findMany({});
+  console.log(allSeriesTEST);
+  return { props: { allMoviesTEST, allSeriesTEST } };
 };
 
 export default function Home(props: any) {
   const [session, loading] = useSession();
 
   const [state, setState] = React.useState({
-    moviesTest: props.allMoviesTEST.slice(-5),
+    moviesTest: [],
+    seriesTest: [],
   });
   let maxMoviesTest = 10;
+
+  React.useEffect(() => {
+    setState({
+      ...state,
+      moviesTest: props.allMoviesTEST.slice(-5),
+      seriesTest: props.allSeriesTEST.slice(-5),
+    });
+  }, []);
 
   if (session) {
     console.log(session);
@@ -43,6 +54,8 @@ export default function Home(props: any) {
                 <MediaCard
                   title={item.title}
                   poster={item.poster}
+                  mediaType="movie"
+                  id={item.id}
                   key={item.id}
                 ></MediaCard>
               );
@@ -53,7 +66,21 @@ export default function Home(props: any) {
           <h2 className="ml-4 text-white mt-2 font-semibold text-xl">
             Your List...
           </h2>
-          <Carousel />
+          <div className="m-4 flex overflow-hidden">
+            {state.seriesTest.map((item: any) => {
+              let card = (
+                <MediaCard
+                  title={item.title}
+                  poster={item.poster}
+                  mediaType="series"
+                  id={item.id}
+                  key={item.id}
+                ></MediaCard>
+              );
+
+              return card;
+            })}
+          </div>
         </main>
       </div>
     );

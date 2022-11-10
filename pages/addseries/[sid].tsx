@@ -81,26 +81,26 @@ function castList(castArr: any) {
   }
   let cast = [];
   let key = 0;
-  let maxKey = 5;
+  let maxKey = 7;
   for (let person of castArr) {
     if (
       (key == maxKey - 1 || key == castArr.length - 1) &&
       castArr.length > 0
     ) {
       cast.push(
-        <span key={key}>
+        <div key={key}>
           and <b>{person.name}</b> as {person.character}
-        </span>
+        </div>
       );
     } else {
       cast.push(
-        <span key={key}>
-          <b>{person.name}</b> as {person.character} -{" "}
-        </span>
+        <div key={key}>
+          <b>{person.name}</b> as {person.character}
+        </div>
       );
     }
     key += 1;
-    if (key >= 5) {
+    if (key >= maxKey) {
       break;
     }
   }
