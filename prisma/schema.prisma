@@ -74,7 +74,6 @@ model VerificationRequest {
 
 // Data Tables
 model WatchedMovie {
-  id        Int @id @default(autoincrement())
   user      User @relation(fields: [userId], references: [id])
   userId    String
   movie     Movie @relation(fields: [movieId], references: [id])
@@ -86,6 +85,8 @@ model WatchedMovie {
   watchedAt     DateTime?
   createdAt     DateTime  @default(now())
   updatedAt     DateTime  @updatedAt
+
+  @@id([userId, movieId])
 
 }
 
@@ -305,4 +306,13 @@ model CrewInSeries {
   updatedAt     DateTime  @updatedAt
 
   @@id([crewId, seriesId])
+}
+
+model Platform {
+  id      Int @id @default(autoincrement())
+  name    String
+  owner   String?
+  icon    String?
+  createdAt     DateTime  @default(now())
+  updatedAt     DateTime  @updatedAt
 }

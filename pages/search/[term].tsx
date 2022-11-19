@@ -3,6 +3,7 @@ import { getSession } from "next-auth/client";
 import prisma from "../../lib/prisma";
 import MediaCard from "../../components/MediaCard";
 import Link from "next/link";
+import { useRouter } from "next/router";
 
 export const getServerSideProps = async (context: any) => {
   let { term } = context.query;
@@ -64,6 +65,10 @@ export const getServerSideProps = async (context: any) => {
 };
 
 export default function SearchResults(props: any) {
+  console.log(props);
+
+  const router = useRouter();
+
   let [state, setState] = React.useState({
     mresults: [],
     sresults: [],
@@ -77,7 +82,7 @@ export default function SearchResults(props: any) {
       mresults: props.mresults,
       sresults: props.sresults,
     });
-  }, []);
+  }, [router.query.term]);
 
   return (
     <>
